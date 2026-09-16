@@ -16,23 +16,32 @@ import os
 MY_EMAIL = os.environ.get("MY_EMAIL")
 MY_PASSWORD = os.environ.get("MY_PASSWORD")
 
-today = datetime.now()
-today_tuple = (today.month, today.day)
+def get_letter(date):
+    person_file = birthdays[(birthdays.month==date.month) & (birthdays.day ==date.day)]
+    name = person_file.name.item()
+    filepath = f"letter_templates/{random.choice(letters)}"
 
-data = pandas.read_csv("birthdays.csv")
-birthdays_dict = {(data_row["month"], data_row["day"])                  : data_row for (index, data_row) in data.iterrows()}
-if today_tuple in birthdays_dict:
-    birthday_person = birthdays_dict[today_tuple]
-    file_path = f"letter_templates/letter_{random.randint(1, 3)}.txt"
-    with open(file_path) as letter_file:
-        contents = letter_file.read()
-        contents = contents.replace("[NAME]", birthday_person["name"])
+    with open(filepath,"r") as file:
+        content = file.read()
+        new_letter = content.replace("[NAME]", name)
 
-    with smtplib.SMTP("YOUR EMAIL PROVIDER SMTP SERVER ADDRESS") as connection:
-        connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
-        connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs=birthday_person["email"],
-            msg=f"Subject:Happy Birthday!\n\n{contents}"
-        )
+    return new_letter
+
+birthdays = pd.read_csv("birthdays.csv")
+dates_list = []
+for index,row in birthdays.iterrows():
+    birthday = datetime.datetime(year= row.year,month=row.month,day=row.day)
+    dates_list.append(birthday)
+
+today = datetime.datetime.now()
+for date in dates_list:
+    if date.day == today.day and date.month == today.month:
+        letter2send = get_letter(date)
+        with smtplib.SMTP("smtp.gmail.com",587) as connection:
+            connection.starttls()
+            connection.login(email,PASSWORD)
+            connection.sendmail(
+                from_addr=email,
+                to_addrs=email,
+                msg= letter2send
+            )
