@@ -13,8 +13,8 @@ import smtplib
 import os
 
 # import os and use it to get the Github repository secrets
-MY_EMAIL = os.environ.get("MY_EMAIL")
-MY_PASSWORD = os.environ.get("MY_PASSWORD")
+email = os.environ.get("MY_EMAIL")
+PASSWORD = os.environ.get("MY_PASSWORD")
 letters = ['letter_1.txt','letter_2.txt','letter_3.txt']
 def get_letter(date):
     person_file = birthdays[(birthdays.month==date.month) & (birthdays.day ==date.day)]
