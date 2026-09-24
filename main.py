@@ -1,7 +1,7 @@
 import requests
 import os
 
-API_KEY = os.environ.get("OWM_API_KEY")
+API_KEY = os.environ.get("OPENWEATHER_API_KEY")
 
 MY_LAT = 18.8480278
 MY_LONG = -97.0806111
