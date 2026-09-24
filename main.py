@@ -6,7 +6,7 @@ API_KEY = os.getenv("OPENWEATHER_API_KEY")
 MY_LAT = 18.8480278
 MY_LONG = -97.0806111
 
-WD_ENDPOINT = "https://api.openweathermap.org/data/2.5/forecast"
+WD_ENDPOINT = "https://api.openweathermap.org/data/2.5/forecast?"
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 CHAT_ID = "6797881320"
